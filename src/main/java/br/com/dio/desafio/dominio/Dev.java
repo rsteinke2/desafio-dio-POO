@@ -8,21 +8,21 @@ public class Dev {
     private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
 
     public void inscreverBootcamp(Bootcamp bootcamp){
-        this.conteudosInscritos.addAll(bootcamp.getConteudos());
+        this.conteudosInscritos.addAll(bootcamp.getConteudos()); //
         bootcamp.getDevsInscritos().add(this);
     }
-    public void progredir(){
+    public void progredir(){ // registra como conteúdo concluído e desinscreve do conteudo já finalizado
         Optional<Conteudo> conteudo = this.conteudosInscritos.stream().findFirst();
         if(conteudo.isPresent()){
-            this.conteudosConcluidos.add(conteudo.get());
-            this.conteudosInscritos.remove(conteudo.get());
+            this.conteudosConcluidos.add(conteudo.get()); // adiciona o conteúdo finalizado
+            this.conteudosInscritos.remove(conteudo.get()); // remove a inscrição do curso
         } else{
-            System.err.println("Você nào está matriculado em nenhum conteúdo!");
+            System.err.println("Você não está matriculado em nenhum conteúdo!");
         }
     }
-    public double calcularTotalXp(){
+    public double calcularTotalXp(){    // soma os conteúdos concluídos utilizando o metodo abstrato calcularXp
         return this.conteudosConcluidos
-                .stream()
+                .stream()//retorna a sequencia de conteudos concluidos para efetuar o cálculo
                 .mapToDouble(Conteudo::calcularXp)
                 .sum();
     }
